@@ -1,157 +1,147 @@
-# API Blog Personnel - Laravel
+# Blog Personal API - Laravel
 
-## Description
+Welcome to the **Blog Personal** project developed with Laravel. This API provides a modern and scalable blogging platform with full CRUD capabilities for articles, users, categories, and comments.
 
-Cette API Laravel fournit un système de publication pour un blog personnel, incluant :
+## Project Goals
 
-* gestion des utilisateurs (authentification JWT)
-* gestion des articles
-* gestion des catégories
-* gestion des commentaires
-* fonctionnalités de pagination
-* recherche textuelle des articles
+* Allow users to create, read, update, and delete blog articles
+* Manage users, roles, and permissions
+* Organize articles by category
+* Enable visitors to comment on articles
+* Provide a clean, secure, and well-documented API
 
-L’API est développée en utilisant **Laravel** avec Eloquent ORM.
+## Main Features
 
----
+* User authentication and authorization with Laravel Sanctum or Passport
+* CRUD operations for **Articles**
+* CRUD operations for **Users**
+* CRUD operations for **Comments**
+* CRUD operations for **Categories**
+* Eloquent ORM for database interactions
+* Input validation with Laravel form requests
+* Centralized error handling
+* API resource responses
+* Pagination and filtering
+* Basic security (CORS, throttling, etc.)
 
-## Fonctionnalités
+## Database Tables
 
-* Authentification par JWT (Laravel Sanctum ou Laravel Passport)
-* CRUD complet sur les articles
-* CRUD complet sur les catégories
-* Ajout, édition et suppression de commentaires
-* Pagination des résultats d’articles
-* Recherche textuelle plein texte sur les titres et contenus
-* Gestion des rôles (par exemple `admin`, `auteur`, `lecteur`)
+The API uses the following relational database tables:
 
----
+* **users**
 
-## Stack technique
+  * id
+  * name
+  * email
+  * password (hashed)
+  * role
+  * created\_at
 
-* PHP 8.x
-* Laravel 11.x
-* MySQL ou PostgreSQL
+* **articles**
+
+  * id
+  * title
+  * content
+  * image
+  * created\_at
+  * updated\_at
+  * category\_id (foreign key)
+  * user\_id (foreign key, author)
+
+* **categories**
+
+  * id
+  * name
+  * description
+
+* **comments**
+
+  * id
+  * content
+  * created\_at
+  * user\_id (author)
+  * article\_id (target)
+
+## Technologies Used
+
+* PHP
+* Laravel Framework
 * Eloquent ORM
-* JWT (Sanctum/Passport)
-
----
+* MySQL or PostgreSQL
+* Sanctum or Passport for API authentication
+* PHPUnit for testing
 
 ## Installation
 
-1. **Cloner le dépôt**
+1. Clone the repository:
 
 ```bash
-git clone https://github.com/votre-utilisateur/api-blog-laravel.git
-cd api-blog-laravel
+git clone https://github.com/your-user/blog-personal-laravel.git
 ```
 
-2. **Installer les dépendances**
+2. Install dependencies:
 
 ```bash
 composer install
 ```
 
-3. **Copier le fichier d’environnement**
+3. Copy the example environment file and update configuration:
 
 ```bash
 cp .env.example .env
 ```
 
-4. **Générer la clé d’application**
+Edit `.env` and set your database and other environment values:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=...
+DB_USERNAME=...
+DB_PASSWORD=...
+```
+
+4. Generate the application key:
 
 ```bash
 php artisan key:generate
 ```
 
-5. **Configurer la base de données**
-   Éditer le fichier `.env` avec vos paramètres :
-
-```dotenv
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=blogdb
-DB_USERNAME=root
-DB_PASSWORD=
-```
-
-6. **Lancer les migrations**
+5. Run migrations:
 
 ```bash
 php artisan migrate
 ```
 
-7. **Installer et configurer JWT**
-
-* Avec Sanctum
-
-```bash
-composer require laravel/sanctum
-php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
-php artisan migrate
-```
-
-* Ou avec Passport
-
-```bash
-composer require laravel/passport
-php artisan migrate
-php artisan passport:install
-```
-
-8. **Lancer le serveur**
+6. Start the development server:
 
 ```bash
 php artisan serve
 ```
 
----
+## Testing
 
-## Endpoints principaux
-
-* `POST /api/register` : inscription d’un utilisateur
-* `POST /api/login` : connexion d’un utilisateur
-* `GET /api/articles` : lister les articles (avec pagination)
-* `GET /api/articles/search?q=motcle` : rechercher des articles
-* `GET /api/articles/{id}` : voir un article
-* `POST /api/articles` : créer un article
-* `PUT /api/articles/{id}` : mettre à jour un article
-* `DELETE /api/articles/{id}` : supprimer un article
-* `GET /api/categories` : lister les catégories
-* `POST /api/comments` : ajouter un commentaire
-* `GET /api/articles/{id}/comments` : lister les commentaires d’un article
-
----
-
-## Tests
-
-Lancer les tests avec :
+Run the test suite with:
 
 ```bash
 php artisan test
 ```
 
----
+or
 
-## Sécurité
+```bash
+vendor/bin/phpunit
+```
 
-* Authentification par token JWT
-* Protection CSRF pour le panel admin (si applicable)
-* Validation stricte des entrées
+## Notes
 
----
+* This Laravel backend uses **Eloquent ORM** for managing all database operations.
+* Input validation, error handling, and security best practices are applied throughout.
+* This project is one of three separate repositories:
 
-## Contribuer
-
-1. Forker le projet
-2. Créer une branche
-3. Soumettre une pull request
-
----
-
-## License
-
-Ce projet est sous licence MIT.
+  * Laravel (PHP)
+  * Express.js (Node)
+  * Spring Boot (Java)
 
 ---
